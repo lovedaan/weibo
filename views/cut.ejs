@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>班级说说--裁切图片</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/jquery.Jcrop.css" type="text/css" />
+  <script src="/js/jquery-1.11.3.min.js"></script>
+  <script src="/js/jquery.Jcrop.js"></script>
+  <script type="text/javascript" src="/js/xiaoguo.js"></script>
+    <style type="text/css">
+        body{
+          padding-top: 80px;
+        }
+        .cutBox{
+          display: none;
+        }
+        #targetBox img{
+          width: 100%;
+        }
+        #submitBtn{
+          margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+  <% include header.ejs %>
+    <div class="container">
+      
+      <div class="row col-lg-6" style="float:none;">
+      <h2>个性签名</h2>
+      <input type="text" class="form-control signature" placeholder="输入你的签名">
+      <h2>上传头像</h2>
+        <form>
+          <div class="form-group">
+            <label for="exampleInputFile">
+            修改头像</label>
+            <input type="file" id="fileElem" onchange="showPreview(this)" />
+          </div>
+        </form>
+        <div class="cutBox">
+          <img height="375" width="500" id="target" alt="[Jcrop Example]" />
+          <div id="preview-pane">
+            <div class="preview-container">
+              <img height="375" id="smallPic"  width="500" class="jcrop-preview" alt="Preview" />
+            </div>
+          </div>
+          
+          </div>
+          <button type="button" id="submitBtn" class="btn btn-success">提交</button>
+      </div>
+      
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2014</p>
+      </footer>
+    </div> 
+  
+
+
+</body>
+</html>
+<script>
+    function showPreview(source) {
+        
+        var file = source.files[0];
+        if (window.FileReader) {
+            var fr = new FileReader();
+            fr.onloadend = function(e) {
+                //document.getElementById("target").src = e.target.result;
+                
+                var formdata = new FormData();
+                formdata.append("fileName",file); 
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function (res) {
+                    if(res.currentTarget.responseText == "1"){
+                        $(".jcrop-tracker").next().next().attr("src",e.target.result).css("opacity",1);
+                          document.getElementById("smallPic").src = e.target.result;
+                          $(".cutBox").show();
+                          source.value = '';
+                    }
+                }
+
+                xhr.open("post","/doAvatar",true);
+                xhr.send(formdata);
+
+            };
+            fr.readAsDataURL(file);
+        }
+    }
+</script>
+<script type="text/javascript">
+     $("#submitBtn").on("click",function () {
+        var w = parseInt($(".jcrop-holder>div:first").css("width"));
+        var h = parseInt($(".jcrop-holder>div:first").css("height"));
+        var l = parseInt($(".jcrop-holder>div:first").css("left"));
+        var t = parseInt($(".jcrop-holder>div:first").css("top"));
+
+        //alert(w+','+h+ ','+l+','+t);
+        var txt = $(".signature").val();
+        $.get("/doCut",{
+          "w" : w,
+          "h" : h,
+          "l" : l,
+          "t" : t,
+          "txt" : txt
+        },function (result) {
+            if(result == "-2"){
+                alert("数据库查询错误");
+            }
+            else if(result == "1"){
+                alert("裁切成功！");
+                window.location = "/";
+            }
+        });
+
+
+
+    });
+</script>
+

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>星朗微博--个人主页</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body{
+          padding-top: 80px;
+        }
+        .media{
+          border-bottom: 1px solid #ccc;
+        }
+    </style>  
+  </head>
+    
+  <body>
+    <% include header.ejs %>
+    <div class="container">
+      
+      <div class="row col-lg-6" style="float:none;">
+      <% if(allMsg.length == 0){ %>
+      <img width="100" class="media-object" src="/avatar/<%= avatar%>">
+      <h1><%= name%>的个人主页</h1>
+       <h3>个性签名：<%= txt%></h3>
+      </div>
+        
+        <% }else{ %>
+            <img width="100" class="media-object" src="/avatar/<%= allMsg[0].avatar%>">
+            <h1><%= name%>的个人主页</h1>
+            <h3>个性签名：<%= txt%></h3>
+            </div>
+              <% for(var i =0; i< allMsg.length;i++){%>
+              <div class="media">
+                <div class="media-body">
+                  <h4><%= allMsg[i].username%>说：</h4>
+                  <p><%= allMsg[i].content%></p>
+                  <p><%= allMsg[i].datetime%></p>
+                </div>
+              </div>
+              <% } %>
+        <% } %>
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2014</p>
+      </footer>
+    </div> 
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

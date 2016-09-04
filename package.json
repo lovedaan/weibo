@@ -1,0 +1,21 @@
+{
+  "name": "say",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.1",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "formidable": "^1.0.17",
+    "gm": "^1.23.0",
+    "mongodb": "^2.2.8",
+    "silly-datetime": "^0.1.2"
+  }
+}

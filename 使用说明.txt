@@ -1,0 +1,21 @@
+mongod --dbpath e:\NodeJs\node\nodedemo\shuoshuo\mongo
+文件夹说明：
+    avatar        存放上传的头像
+    models        具体业务
+    mongodb       数据库存放的
+    node_modules  依赖的第三方的包
+    router        控制器路由设计
+    views         模板视图文件
+    app.js        主文件的入口
+    package.json  配置包的依赖文件
+
+第一步先下载第三方依赖的包
+    npm install
+第二步链接数据库
+    mongod --dbpath mongodb所在文件夹的完整路径
+    有两个集合：
+        users ：存放用户注册信息
+        posts : 存放用户发表的论坛
+第三步运行app.js
+    node app.js
+在浏览器打开127.0.0.1:8000
